@@ -31,4 +31,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            FIRST_NAME=${{ env.IMAGE_NAME }}
+            FIRST_NAME=${{ github.event.repository.name }}
