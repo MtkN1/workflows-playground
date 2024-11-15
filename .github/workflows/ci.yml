@@ -13,54 +13,7 @@ jobs:
         id: meta
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            # minimal
-            type=schedule
-            # default
-            type=schedule,pattern=nightly
-            # handlebars
-            type=schedule,pattern={{date 'YYYYMMDD'}}
-            # handlebars with timezone
-            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Asia/Tokyo'}}
-            # minimal
-            type=semver,pattern={{version}}
-            # use custom value instead of git tag
-            type=semver,pattern={{version}},value=v1.0.0
-            # minimal
-            type=pep440,pattern={{version}}
-            # use custom value instead of git tag
-            type=pep440,pattern={{version}},value=1.0.0
-            # minimal
-            type=match,pattern=\d.\d.\d
-            # define match group
-            type=match,pattern=v(.*),group=1
-            # use custom value instead of git tag
-            type=match,pattern=v(.*),group=1,value=v1.0.0
-            # minimal
-            type=edge
-            # define default branch
-            type=edge,branch=main
-            # branch event
-            type=ref,event=branch
-            # tag event
-            type=ref,event=tag
-            # pull request event
-            type=ref,event=pr
-            type=raw,value=foo
-            type=raw,value=bar
-            # or
-            type=raw,foo
-            type=raw,bar
-            # or
-            foo
-            bar
-            # minimal (short sha)
-            type=sha
-            # full length sha
-            type=sha,format=long
-      - run: echo "$OUTPUTS"
+      - name: Run echo $IMAGE_REF
+        run: echo "$IMAGE_REF"
         env:
-          OUTPUTS: ${{ toJson(steps.meta.outputs) }}
-      - run: echo "$OUTPUTS" | jq
-        env:
-          OUTPUTS: ${{ toJson(steps.meta.outputs) }}
+          IMAGE_REF: ${{ fromJson(steps.meta.outputs.json).tags[0] }}
