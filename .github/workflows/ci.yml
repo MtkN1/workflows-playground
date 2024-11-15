@@ -35,8 +35,8 @@ jobs:
 
       - name: docker pull
         run: |
-          docker pull "${DIGEST_IMAGE_NAME}@${DIGEST}"
-          docker inspect "${DIGEST_IMAGE_NAME}@${DIGEST}"
+          docker pull "${IMAGE_NAME}@${DIGEST}"
+          docker inspect "${IMAGE_NAME}@${DIGEST}"
         env:
           IMAGE_NAME: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build.outputs.digest }}
