@@ -33,8 +33,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            FIRST_NAME=${{ github.event.repository.name }}
 
       - name: Image digest
         id: digest
@@ -44,6 +42,8 @@ jobs:
           DIGEST: ${{ steps.build.outputs.digest }}
 
       - run: |
-          docker inspect "$IMAGE_NAME" | tee /dev/null
+          set +e
+          docker pull "$DIGEST_IMAGE_NAME"
+          docker inspect "$DIGEST_IMAGE_NAME"
         env:
-          IMAGE_NAME: ${{ steps.digest.outputs.image_name }}
+          DIGEST_IMAGE_NAME: ${{ steps.digest.outputs.image_name }}
