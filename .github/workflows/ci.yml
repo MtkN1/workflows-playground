@@ -12,6 +12,5 @@ jobs:
       - uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          flavor: |
-            latest=auto
-            suffix=-${{ github.run_id }}
+          tags: |
+            type=sha
