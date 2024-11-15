@@ -27,7 +27,7 @@ FROM source AS configure
 RUN set -eux; \
 	\
 	cd /usr/src/python; \
-	./configure
+	./configure --with-ensurepip=no
 
 # ------------------------------------------------------------------------------
 
@@ -36,8 +36,7 @@ FROM configure AS make
 RUN set -eux; \
 	\
 	cd /usr/src/python; \
-	nproc="$(nproc)"; \
-	make -j "$nproc"
+	make -j
 
 # ------------------------------------------------------------------------------
 
@@ -46,4 +45,4 @@ FROM make AS make-install
 RUN set -eux; \
 	\
 	cd /usr/src/python; \
-	make install
+	make altinstall
