@@ -21,6 +21,7 @@ jobs:
           - Alice
           - Bob
           - Charlie
+      fail-fast: false
     outputs:
       Alice: ${{ steps.gen_output.outputs.Alice }}
       Bob: ${{ steps.gen_output.outputs.Bob }}
