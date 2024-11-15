@@ -54,10 +54,10 @@ jobs:
       - name: Generate output
         id: gen_output
         run: |
-          echo "${MATRIX_VALUE}=${TAGS%:dangling}@${DIGEST}" | tee -a "$GITHUB_OUTPUT"
+          echo "${MATRIX_VALUE}=${IMAGE_REF}@${DIGEST}" | tee -a "$GITHUB_OUTPUT"
         env:
           MATRIX_VALUE: ${{ matrix.first-name }}
-          TAGS: ${{ steps.meta.outputs.tags }}
+          IMAGE_REF: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.push.outputs.digest }}
 
   combine:
