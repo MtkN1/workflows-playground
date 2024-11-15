@@ -31,7 +31,7 @@ RUN set -eux; \
 
 # ------------------------------------------------------------------------------
 
-FROM source AS make
+FROM configure AS make
 
 RUN set -eux; \
 	\
@@ -41,7 +41,7 @@ RUN set -eux; \
 
 # ------------------------------------------------------------------------------
 
-FROM source AS make-install
+FROM make AS make-install
 
 RUN set -eux; \
 	\
