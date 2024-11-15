@@ -14,4 +14,4 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: |
             latest=auto
-            suffix=${{ github.run_id }}
+            suffix=-${{ github.run_id }}
