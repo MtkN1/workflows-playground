@@ -58,6 +58,9 @@ jobs:
             type=sha
             # full length sha
             type=sha,format=long
-      - run: echo
+      - run: echo "$OUTPUTS"
         env:
-          OUTPUT: ${{ toJson(steps.meta.outputs) }}
+          OUTPUTS: ${{ toJson(steps.meta.outputs) }}
+      - run: echo "$OUTPUTS" | jq
+        env:
+          OUTPUTS: ${{ toJson(steps.meta.outputs) }}
