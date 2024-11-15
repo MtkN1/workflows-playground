@@ -22,8 +22,7 @@ jobs:
         id: meta
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            latest
+          tags: ${{ github.ref_name }}
 
       - uses: docker/setup-buildx-action@v3
 
@@ -34,16 +33,10 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Image digest
-        id: digest
-        run: echo "image_name=${TAGS%:latest}@${DIGEST}" | tee -a "$GITHUB_OUTPUT"
+      - name: docker pull
+        run: |
+          docker pull "${DIGEST_IMAGE_NAME}@${DIGEST}"
+          docker inspect "${DIGEST_IMAGE_NAME}@${DIGEST}"
         env:
-          TAGS: ${{ steps.meta.outputs.tags }}
+          IMAGE_NAME: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build.outputs.digest }}
-
-      - run: |
-          set +e
-          docker pull "$DIGEST_IMAGE_NAME"
-          docker inspect "$DIGEST_IMAGE_NAME"
-        env:
-          DIGEST_IMAGE_NAME: ${{ steps.digest.outputs.image_name }}
