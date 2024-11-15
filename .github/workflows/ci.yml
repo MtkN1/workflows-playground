@@ -28,6 +28,7 @@ jobs:
       - uses: docker/build-push-action@v6
         id: build
         with:
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             FIRST_NAME=${{ github.event.repository.name }}
