@@ -32,4 +32,7 @@ jobs:
           build-args: |
             FIRST_NAME=${{ github.event.repository.name }}
 
-      - run: echo ${{ steps.build.outputs.digest }}
+      - run: echo
+        env:
+          imageid: ${{ steps.build.outputs.imageid }}
+          digest: ${{ steps.build.outputs.digest }}
