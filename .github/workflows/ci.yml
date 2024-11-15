@@ -11,17 +11,17 @@ jobs:
       - name: 📦 `docker build`
         run: |
           echo ::group::Stage: source
-          docker build --target source
+          docker build --target source .
           echo ::endgroup::
 
           echo ::group::Stage: configure
-          docker build --target configure
+          docker build --target configure .
           echo ::endgroup::
 
           echo ::group::Stage: make
-          docker build --target make
+          docker build --target make .
           echo ::endgroup::
 
           echo ::group::Stage: make-install
-          docker build --target make-install
+          docker build --target make-install .
           echo ::endgroup::
