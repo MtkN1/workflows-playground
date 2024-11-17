@@ -19,4 +19,4 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
       - name: Run tree
-        run: tree -a dist
+        run: tree -a --gitignore
