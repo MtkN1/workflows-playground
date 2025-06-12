@@ -3,14 +3,23 @@ on:
   push:
   workflow_dispatch:
 jobs:
-  build:
+  upload:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        color: ["red", "green", "blue"]
     steps:
-      - run: echo Hello, world!
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          JOB_CONTEXT: ${{ toJson(job) }}
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      - run: echo date > color.${{ matrix.color }}
+      - run: tar -cf color.${{ matrix.color }}.tar.gz color.${{ matrix.color }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: color.${{ matrix.color }}
+          path: color.${{ matrix.color }}.tar.gz
+  donwload:
+    runs-on: ubuntu-latest
+    needs: ["upload"]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: color.*
+      - run: tree -a
