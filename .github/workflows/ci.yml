@@ -57,7 +57,7 @@ jobs:
           path: ${{ runner.temp }}
       - run: find "$RUNNER_TEMP" -maxdepth 2 -mindepth 2 -type f | sort
       - name: Extract coverage files
-        run: find "$RUNNER_TEMP/coverage.*" -maxdepth 1 -type f -name coverage.tar -exec tar -xf {} \;
+        run: find "$RUNNER_TEMP"/coverage.* -maxdepth 1 -type f -name coverage.tar -exec tar -xf {} \;
       - run: find . -maxdepth 1 -mindepth 1 -type f | sort
       - name: Run coverage combine
         run: uv run coverage combine
