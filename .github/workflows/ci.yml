@@ -21,5 +21,5 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: color.*
+          pattern: color.*
       - run: tree -a
