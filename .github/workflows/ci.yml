@@ -55,6 +55,7 @@ jobs:
         with:
           pattern: coverage.*
           path: ${{ runner.temp }}
+      - run: find "$RUNNER_TEMP" -mapdepth 1 -mindepth 1 | sort
       - name: Extract coverage files
         run: find "$RUNNER_TEMP/coverage.*" -maxdepth 1 -type f -name coverage.tar -exec tar -xf {} \;
       - run: find . -mapdepth 1 -mindepth 1 | sort
