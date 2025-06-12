@@ -54,8 +54,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           pattern: coverage.*.tar
+      - run: tree
       - name: Extract coverage files
-        run: find . -maxdeps 1 -type f -name coverage.tar -exec tar -xf {} \;
+        run: find . -maxdepth 1 -type f -name coverage.tar -exec tar -xf {} \;
       - name: Run coverage combine
         run: uv run coverage combine
       - name: Run coverage report
