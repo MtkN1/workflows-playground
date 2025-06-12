@@ -7,10 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        color:
-          - red
-          - green
-          - blue
+        fruit: [apple, pear]
+        animal: [cat, dog]
+        include:
+          - color: green
+          - color: pink
+            animal: cat
+          - fruit: apple
+            shape: circle
+          - fruit: banana
+          - fruit: banana
+            animal: cat
       fail-fast: false
     steps:
       - run: echo Hello, world!
