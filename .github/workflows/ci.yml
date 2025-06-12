@@ -38,14 +38,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v3
       - name: Run pytest
-        run: uv run pytest --cov --cov-report=term-missing tests
-      - name: Run mv .coverage
-        run: mv .coverage .coverage.${{ matrix.os }}.${{ matrix.python-version }}
+        run: uv run coverage run --parallel-mode -m pytest tests
+      - name: Archive a coverage file
+        run: tar -cf coverage.tar .coverage.*
       - uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{ matrix.os }}-${{ matrix.python-version }}
-          path: .coverage.${{ matrix.os }}.${{ matrix.python-version }}
-          include-hidden-files: true
+          name: coverage.${{ strategy.job-index }}.tar
+          path: coverage.tar
   coverage:
     needs: test
     runs-on: ubuntu-latest
@@ -54,8 +53,9 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - uses: actions/download-artifact@v4
         with:
-          pattern: coverage*
-          merge-multiple: true
+          pattern: coverage.*.tar
+      - name: Extract coverage files
+        run: find . -maxdeps 1 -type f -name coverage.tar -exec tar -xf {} \;
       - name: Run coverage combine
         run: uv run coverage combine
       - name: Run coverage report
