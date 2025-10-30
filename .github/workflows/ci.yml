@@ -20,6 +20,7 @@ jobs:
         with:
           python-version: "3.14"
           activate-environment: "true"
+          enable-cache: "false"
       - name: platform
         shell: python
         env:
