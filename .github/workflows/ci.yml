@@ -18,4 +18,8 @@ jobs:
       - shell: python
         run: |
           import platform
-          print(platform.uname)
+          print(platform.uname())
+      - shell: python
+        run: |
+          import platform
+          print(platform.libc_ver())
