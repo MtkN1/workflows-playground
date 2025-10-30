@@ -18,15 +18,15 @@ jobs:
       - name: platform
         shell: python
         env:
-          RUNNER_NAME: ${{ matrix.runner }}
+          MATRIX_RUNNER: ${{ matrix.runner }}
         run: |
           import os
           import platform
           github_step_summary = os.environ["GITHUB_STEP_SUMMARY"]
-          runner_name = os.environ["RUNNER_NAME"]
+          matrix_runner = os.environ["MATRIX_RUNNER"]
           with open(github_step_summary, "a", encoding="utf-8") as f:
             lines = [
-              f"## {runner_name}\n",
+              f"## {matrix_runner}\n",
               f"- `{platform.architecture()=}\`n",
               f"- `{platform.machine()=}`\n",
               f"- `{platform.node()=}`\n",
