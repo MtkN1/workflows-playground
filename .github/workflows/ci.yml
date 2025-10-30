@@ -27,7 +27,7 @@ jobs:
           with open(github_step_summary, "a", encoding="utf-8") as f:
             lines = [
               f"## {matrix_runner}\n",
-              f"- `{platform.architecture()=}\`n",
+              f"- `{platform.architecture()=}`\n",
               f"- `{platform.machine()=}`\n",
               f"- `{platform.node()=}`\n",
               f"- `{platform.platform()=}`\n",
