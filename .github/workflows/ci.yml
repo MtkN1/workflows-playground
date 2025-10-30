@@ -21,6 +21,7 @@ jobs:
           python-version: "3.14"
           activate-environment: "true"
           enable-cache: "false"
+          ignore-empty-workdir: "true"
       - name: platform
         shell: python
         env:
