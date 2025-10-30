@@ -13,13 +13,15 @@ jobs:
           - windows-11-arm
           - macos-15-intel
           - macos-15
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     steps:
-      - shell: python
+      - name: uname
+        shell: python
         run: |
           import platform
           print(platform.uname())
-      - shell: python
+      - name: libc_ver
+        shell: python
         run: |
           import platform
           print(platform.libc_ver())
