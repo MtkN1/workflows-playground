@@ -15,13 +15,35 @@ jobs:
           - macos-15
     runs-on: ${{ matrix.runner }}
     steps:
-      - name: uname
+      - name: platform
         shell: python
+        env:
+          RUNNER_NAME: ${{ matrix.runner }}
         run: |
+          import os
           import platform
-          print(platform.uname())
-      - name: libc_ver
-        shell: python
-        run: |
-          import platform
-          print(platform.libc_ver())
+          github_step_summary = os.environ["GITHUB_STEP_SUMMARY"]
+          runner_name = os.environ["RUNNER_NAME"]
+          with open(github_step_summary, "a", encoding="utf-8") as f:
+            lines = [
+              f"## {runner_name}\n",
+              f"- `{platform.architecture()=}\`n",
+              f"- `{platform.machine()=}`\n",
+              f"- `{platform.node()=}`\n",
+              f"- `{platform.platform()=}`\n",
+              f"- `{platform.platform(aliased=True)=}`\n",
+              f"- `{platform.platform(terse=True)=}`\n",
+              f"- `{platform.processor()=}`\n",
+              f"- `{platform.python_build()=}`\n",
+              f"- `{platform.python_compiler()=}`\n",
+              f"- `{platform.python_branch()=}`\n",
+              f"- `{platform.python_implementation()=}`\n",
+              f"- `{platform.python_revision()=}`\n",
+              f"- `{platform.python_version()=}`\n",
+              f"- `{platform.python_version_tuple()=}`\n",
+              f"- `{platform.release()=}`\n",
+              f"- `{platform.system()=}`\n",
+              f"- `{platform.version()=}`\n",
+              f"- `{platform.uname()=}`\n",
+            ]
+            f.writelines(lines)
