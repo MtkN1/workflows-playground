@@ -1,16 +1,18 @@
-name: "Install latest LXD"
-on: push
+name: CI
+on: 
+  push:
+  workflow_dispatch:
 jobs:
-  job1:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: canonical/setup-lxd@v0.1.3
-      - run: lxd init --minimal
-      - run: lxc init ubuntu:24.04 u1
-      - run: lxc config set u1 security.nesting=true
-      - run: lxc start u1
-      - run: lxc exec u1 -- su - -c 'apt-get update && apt-get -y install curl ca-certificates && apt-get -y upgrade'
-      - run: lxc exec u1 -- su - -c 'curl -fL https://get.docker.com | sh'
-      - run: lxc exec u1 -- su - -c 'docker run --rm hello-world'
-      - run: lxc exec u1 -- su - -c 'users'
-      - run: lxc exec u1 -- su - -c 'cat /etc/passwd'
+      - run: |
+          set -x
+          lxc init ubuntu:24.04 ubuntu
+          lxc config set ubuntu security.nesting=true
+          lxc start ubuntu
+          lxc exec ubuntu -- su - -c 'cloud-init status --wait'
+          lxc exec ubuntu -- su - -c 'curl -fL https://get.docker.com | sh'
+          lxc exec ubuntu -- su - -c 'usermod -aG docker ubuntu'
+          lxc exec ubuntu -- su - ubuntu -c 'docker run --rm hello-world'
