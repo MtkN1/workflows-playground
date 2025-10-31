@@ -4,13 +4,16 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      # - uses: canonical/setup-lxd@v0.1.3
-      - run: sudo snap install lxd
-      - run: |
-          echo sudo usermod -aG lxd "$USER"
-          sudo usermod -aG lxd "$USER"
-          newgrp lxd
-      - run: sudo lxd init --minimal
+      # - run: sudo snap install lxd
+      - uses: canonical/setup-lxd@main
+        with:
+          preseed: |
+            networks:
+            - name: lxdbr0
+              type: bridge
+              config:
+                ipv4.address: auto
+                ipv6.address: none
       - run: sudo lxc init ubuntu:24.04 u1
       - run: sudo lxc config set u1 security.nesting=true
       - run: sudo lxc start u1
