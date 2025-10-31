@@ -10,11 +10,11 @@ jobs:
           echo sudo usermod -aG lxd "$USER"
           sudo usermod -aG lxd "$USER"
           newgrp lxd
-      - run: lxd init --minimal
-      - run: lxc init ubuntu:24.04 u1
-      - run: lxc config set u1 security.nesting=true
-      - run: lxc start u1
-      - run: lxc exec u1 -- su - -c 'tail /etc/passwd'
-      - run: lxc exec u1 -- su - -c 'curl -fL https://get.docker.com | sh'
-      - run: lxc exec u1 -- su - -c 'sudo usermod -aG docker $USER'
-      - run: lxc exec u1 -- su - -c 'docker run --rm hello-world'
+      - run: sudo lxd init --minimal
+      - run: sudo lxc init ubuntu:24.04 u1
+      - run: sudo lxc config set u1 security.nesting=true
+      - run: sudo lxc start u1
+      - run: sudo lxc exec u1 -- su - -c 'tail /etc/passwd'
+      - run: sudo lxc exec u1 -- su - -c 'curl -fL https://get.docker.com | sh'
+      - run: sudo lxc exec u1 -- su - -c 'sudo usermod -aG docker $USER'
+      - run: sudo lxc exec u1 -- su - -c 'docker run --rm hello-world'
