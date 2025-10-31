@@ -8,6 +8,7 @@ jobs:
       - run: lxc init ubuntu:24.04 u1
       - run: lxc config set u1 security.nesting=true
       - run: lxc start u1
-      - run: lxc exec u1 -- su - ubuntu -c 'curl -fL https://get.docker.com | sh'
-      - run: lxc exec u1 -- su - ubuntu -c 'sudo usermod -aG docker $USER'
-      - run: lxc exec u1 -- su - ubuntu -c 'docker run --rm hello-world'
+      - run: lxc exec u1 -- su - -c 'tail /etc/passwd'
+      - run: lxc exec u1 -- su - -c 'curl -fL https://get.docker.com | sh'
+      - run: lxc exec u1 -- su - -c 'sudo usermod -aG docker $USER'
+      - run: lxc exec u1 -- su - -c 'docker run --rm hello-world'
