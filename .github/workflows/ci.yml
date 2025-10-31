@@ -9,7 +9,9 @@ jobs:
       - uses: canonical/setup-lxd@v0.1.3
       - run: |
           set -x
+          echo "::group::Retrieving image"
           lxc init ubuntu:24.04 ubuntu
+          echo "::endgroup::"
           lxc config set ubuntu security.nesting=true
           lxc start ubuntu
           lxc exec ubuntu -- su - -c 'cloud-init status --wait'
