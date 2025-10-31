@@ -1,16 +1,15 @@
-name: CI
-on: 
-  push:
-  workflow_dispatch:
+name: "Install latest LXD"
+on: push
 jobs:
-  build:
+  job1:
     runs-on: ubuntu-latest
     steps:
-      - run: echo Hello, world!
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          JOB_CONTEXT: ${{ toJson(job) }}
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+
+    - name: Setup LXD
+      uses: canonical/setup-lxd@[version]
+      with:
+        channel: latest/edge
+
+    - name: Launch container
+      run: |
+        lxc launch ubuntu:24.04 u1
