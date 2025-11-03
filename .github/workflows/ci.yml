@@ -29,11 +29,13 @@ jobs:
         run: |
           import os
           import platform
+          import sys
           github_step_summary = os.environ["GITHUB_STEP_SUMMARY"]
           matrix_runner = os.environ["MATRIX_RUNNER"]
           with open(github_step_summary, "a", encoding="utf-8") as f:
             lines = [
               f"## {matrix_runner}\n",
+              f"- `{os.name=}`\n",
               f"- `{platform.architecture()=}`\n",
               f"- `{platform.machine()=}`\n",
               f"- `{platform.node()=}`\n",
@@ -52,5 +54,6 @@ jobs:
               f"- `{platform.system()=}`\n",
               f"- `{platform.version()=}`\n",
               f"- `{platform.uname()=}`\n",
+              f"- `{sys.platform=}`\n",
             ]
             f.writelines(lines)
