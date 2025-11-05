@@ -54,6 +54,7 @@ jobs:
               f"- `{platform.system()=}`\n",
               f"- `{platform.version()=}`\n",
               f"- `{platform.uname()=}`\n",
+              f"- `{platform.libc_ver()=}`\n",
               f"- `{sys.platform=}`\n",
             ]
             f.writelines(lines)
