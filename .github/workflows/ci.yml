@@ -10,5 +10,6 @@ jobs:
       - uses: astral-sh/setup-uv@v8.1.0
         with:
           activate-environment: true
+      - run: uv init --bare
       - run: uv add httpx
       - uses: jakebailey/pyright-action@v3
