@@ -1,7 +1,9 @@
-# This sample demonstrates how common errors can be detected statically by pyright.
+def greeting(name: str) -> str:
+    return 'Hello ' + name
 
-def add(x: float, y: float):
-    return x + y
+greeting(3)         # Argument 1 to "greeting" has incompatible type "int"; expected "str"
+greeting(b'Alice')  # Argument 1 to "greeting" has incompatible type "bytes"; expected "str"
+greeting("World!")  # No error
 
-# Passing a str instance as the second argument results in a runtime exception.
-add(1, "")
+def bad_greeting(name: str) -> str:
+    return 'Hello ' * name  # Unsupported operand types for * ("str" and "str")
